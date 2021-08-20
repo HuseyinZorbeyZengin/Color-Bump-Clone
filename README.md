@@ -1,2 +1,2 @@
-# Color-Bump-Colone
+# Color-Bump-Clone
 Hyper Casual Game
