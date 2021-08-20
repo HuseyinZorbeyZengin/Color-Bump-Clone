@@ -9,13 +9,19 @@ public class PlayerController : MonoBehaviour
     public float sensitivity = 0.16f, clampDelta = 42f;
 
     public float bounds = 5f;
-    // Start is called before the first frame update
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+    void Update()
+    {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -bounds, bounds), transform.position.y, transform.position.z);
+        transform.position += FindObjectOfType<CameraMovement>().cameraVelocity;
+    }
+
+
     void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
@@ -29,7 +35,8 @@ public class PlayerController : MonoBehaviour
             vector = new Vector3(vector.x, 0, vector.y);
 
             Vector3 moveForce = Vector3.ClampMagnitude(vector, clampDelta);
-            rb.AddForce(Vector3.forward * 2 + (-moveForce * sensitivity - rb.velocity / 5f), ForceMode.VelocityChange);
+            rb.AddForce(-moveForce * sensitivity - rb.velocity / 5f, ForceMode.VelocityChange);
         }
+        rb.velocity.Normalize();
     }
 }
