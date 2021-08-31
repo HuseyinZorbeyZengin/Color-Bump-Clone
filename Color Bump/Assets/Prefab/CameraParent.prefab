@@ -172,5 +172,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 710f669ce8b6e074a825029e54489b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeed: 7
+  cameraSpeed: 0.15
   cameraVelocity: {x: 0, y: 0, z: 0}
