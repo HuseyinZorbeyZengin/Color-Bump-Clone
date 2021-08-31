@@ -28,13 +28,6 @@ public class PlayerController : MonoBehaviour
             transform.position += FindObjectOfType<CameraMovement>().cameraVelocity;
         }
 
-        if (!canMove)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                canMove = true;
-            }
-        }
         if (!canMove && gameOver)
         {
             if (Input.GetMouseButtonDown(0))
@@ -42,6 +35,16 @@ public class PlayerController : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+        else if (!canMove)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                canMove = true;
+            }
+        }
+
+
+
     }
     void FixedUpdate()
     {
