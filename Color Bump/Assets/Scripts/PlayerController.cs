@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool canMove;
     public bool gameOver;
+    private bool finish;
 
     void Awake()
     {
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
-        else if (!canMove)
+        else if (!canMove && !finish)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -75,11 +76,27 @@ public class PlayerController : MonoBehaviour
         GetComponent<Collider>().enabled = false;
     }
 
+    IEnumerator NextLevel()
+    {
+        finish = true;
+        canMove = false;
+        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("Level" + PlayerPrefs.GetInt("Level"));
+    }
+
     void OnCollisionEnter(Collision target)
     {
         if (target.gameObject.tag == "Enemy")
         {
             GameOver();
+        }
+    }
+    private void OnTriggerEnter(Collider target)
+    {
+        if (target.gameObject.name == "Finish")
+        {
+            StartCoroutine(NextLevel());
         }
     }
 }
