@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7116601171278675772}
   - component: {fileID: 7116601171278675771}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: LevelNo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7116601171278675769}
-  m_Text: LEVEL 2
+  m_Text: LEVEL
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1

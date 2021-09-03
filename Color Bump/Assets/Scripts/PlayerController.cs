@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public bool gameOver;
     private bool finish;
 
+    public GameObject breakablePlayer;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -34,14 +36,18 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                Time.timeScale = 1;
+                Time.fixedDeltaTime = Time.timeScale * 0.02f;
             }
         }
         else if (!canMove && !finish)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                FindObjectOfType<GameManager>().RemoveUI();
                 canMove = true;
             }
+
         }
 
 
@@ -70,10 +76,22 @@ public class PlayerController : MonoBehaviour
 
     private void GameOver()
     {
+        GameObject shatterSphere = Instantiate(breakablePlayer, transform.position, Quaternion.identity);
+        foreach (Transform obj in shatterSphere.transform)
+        {
+            obj.GetComponent<Rigidbody>().AddForce(Vector3.forward * 5, ForceMode.Impulse);
+        }
+
         canMove = false;
         gameOver = true;
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
+        GetComponentInChildren<TrailRenderer>().enabled = false;
+
+        Time.timeScale = 0.5f;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+
     }
 
     IEnumerator NextLevel()
@@ -89,7 +107,11 @@ public class PlayerController : MonoBehaviour
     {
         if (target.gameObject.tag == "Enemy")
         {
-            GameOver();
+            if (!gameOver)
+            {
+                GameOver();
+            }
+
         }
     }
     private void OnTriggerEnter(Collider target)
